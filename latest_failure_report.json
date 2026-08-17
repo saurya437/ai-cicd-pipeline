@@ -1,0 +1,21 @@
+{
+  "run_id": 32037474127,
+  "branch": "main",
+  "commit_message": "Intentionally break test to observe pipeline failure",
+  "commit_sha": "16c74b685484341ab3fd3c413759d0b22abd4786",
+  "created_at": "2026-08-17T14:00:10Z",
+  "status": "failure",
+  "failed_jobs": [
+    {
+      "job_name": "test",
+      "job_id": 95410671859,
+      "error_lines": [
+        "2026-08-17T14:00:21.2740028Z         assert response.status_code == 200",
+        "2026-08-17T14:00:21.2740509Z >       assert response.get_json()['status'] == 'broken'",
+        "2026-08-17T14:00:21.2741033Z E       AssertionError: assert 'healthy' == 'broken'",
+        "2026-08-17T14:00:21.2742739Z tests/test_app.py:16: AssertionError",
+        "2026-08-17T14:00:21.2744217Z FAILED tests/test_app.py::test_health_endpoint - AssertionError: assert 'healthy' == 'broken'"
+      ]
+    }
+  ]
+}
