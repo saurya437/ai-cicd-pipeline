@@ -1,5 +1,3 @@
-import fake_missing_package
-
 from flask import Flask
 
 app = Flask(__name__)
