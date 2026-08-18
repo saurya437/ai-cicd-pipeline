@@ -1,35 +1,17 @@
 {
-  "run_id": 32170454047,
+  "run_id": 32170758986,
   "branch": "main",
-  "commit_message": "Self-heal: auto-add missing dependency 'fake_missing_package'",
-  "commit_sha": "b12d1511474fd5a413a0052ff1e1269909e2ef64",
-  "created_at": "2026-08-18T18:20:21Z",
+  "commit_message": "fix requirement.txt fake missing package1.0",
+  "commit_sha": "389295fa4d91d5bbfa32a0234bd9bbd5f021d982",
+  "created_at": "2026-08-18T18:23:42Z",
   "status": "failure",
   "failed_jobs": [
     {
       "job_name": "test",
-      "job_id": 95820085596,
+      "job_id": 95821068874,
       "error_lines": [
-        "2026-08-18T18:20:29.0995115Z             ~~~~~~~^ (from line 33 of requirements.txt)",
-        "2026-08-18T18:20:29.1333919Z ##[error]Process completed with exit code 1.",
-        "2026-08-18T18:20:29.1658215Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
-        "2026-08-18T18:20:29.1661735Z Post job cleanup.",
-        "2026-08-18T18:20:29.2510133Z [command]/usr/bin/git version",
-        "2026-08-18T18:20:29.2555210Z git version 2.54.0",
-        "2026-08-18T18:20:29.2629113Z Temporarily overriding HOME='/home/runner/work/_temp/d6454b25-258e-4742-91b2-e2edaaf3ff3d' before making global git config changes",
-        "2026-08-18T18:20:29.2632866Z Adding repository directory to the temporary git global config as a safe directory",
-        "2026-08-18T18:20:29.2635642Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ai-cicd-pipeline/ai-cicd-pipeline",
-        "2026-08-18T18:20:29.2679902Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand",
-        "2026-08-18T18:20:29.2723078Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"",
-        "2026-08-18T18:20:29.2982866Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader",
-        "2026-08-18T18:20:29.3012184Z http.https://github.com/.extraheader",
-        "2026-08-18T18:20:29.3024931Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader",
-        "2026-08-18T18:20:29.3072255Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"",
-        "2026-08-18T18:20:29.3331506Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:",
-        "2026-08-18T18:20:29.3383493Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url",
-        "2026-08-18T18:20:29.3813452Z Cleaning up orphan processes",
-        "2026-08-18T18:20:29.4190891Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
-        ""
+        "2026-08-18T18:23:55.6624440Z ImportError while importing test module '/home/runner/work/ai-cicd-pipeline/ai-cicd-pipeline/tests/test_app.py'.",
+        "2026-08-18T18:23:55.6628595Z E   ModuleNotFoundError: No module named 'fake_missing_package'"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 {
-  "root_cause": "Package 'fake_missing_package' PyPI par exist nahi karta hai, isliye pip install fail ho raha hai",
-  "explanation": "Commit message me likha hai ki 'fake_missing_package' ko automatically add kiya gaya hai requirements.txt me (line 33 par). Lekin ye package real nahi hai - PyPI repository me ye package available nahi hai. Jab pip install command chala toh wo is package ko dhundh nahi paya aur exit code 1 ke saath fail ho gaya. Ye ek self-healing system ki galti lag rahi hai jo missing dependency detect karke galat package name add kar diya",
-  "suggested_fix": "1. requirements.txt ki line 33 se 'fake_missing_package' entry ko remove karo\n2. Self-healing automation logic ko review karo jo automatically dependencies add kar raha hai\n3. Agar koi real package missing hai toh uska sahi naam identify karke add karo\n4. Self-healing system me validation add karo jo PyPI par package existence check kare before adding",
+  "root_cause": "requirements.txt me package name galat likha gaya hai - 'fake_missing_package' install nahi ho pa raha",
+  "explanation": "Commit message me likha hai 'fix requirement.txt fake missing package1.0' lekin test runtime pe 'fake_missing_package' module nahi mil raha. Ya to requirements.txt me package name typo hai, ya package PyPI pe exist hi nahi karta, ya phir requirements.txt update hone ke baad dependencies install nahi hui. Test file import kar rahi hai lekin package environment me available nahi hai.",
+  "suggested_fix": "1. requirements.txt me package name check karo - sahi spelling aur version confirm karo 2. Agar package real hai to 'pip install -r requirements.txt' run karo 3. Agar ye fake/test package hai to isko requirements.txt se remove karo ya test_app.py se iski dependency hatao 4. CI pipeline me ensure karo ki dependencies install step properly run ho raha hai",
   "severity": "high",
-  "auto_fixable": true
+  "auto_fixable": false
 }
