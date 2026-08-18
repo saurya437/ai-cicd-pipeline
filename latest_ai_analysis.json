@@ -1,7 +1,7 @@
 {
-  "root_cause": "Package 'fake_missing_package' PyPI par exist nahi karta, isliye pip install fail ho raha hai",
-  "explanation": "Commit message me likha hai ki 'fake_missing_package' dependency ko auto-add kiya gaya hai requirements.txt file ki line 34 me. Lekin ye package PyPI (Python Package Index) par available nahi hai. Jab CI/CD pipeline ne dependencies install karne ki koshish ki, to pip is non-existent package ko download nahi kar paya aur exit code 1 ke saath fail ho gaya. Ye ek 'self-heal' attempt tha jo galat package name add kar diya.",
-  "suggested_fix": "1. requirements.txt se line 34 par 'fake_missing_package' entry ko remove karo. 2. Agar koi actual missing dependency hai to uska sahi naam identify karke add karo. 3. Self-heal automation script ko review karo jo galat package names add kar raha hai aur usko disable ya fix karo. 4. Changes commit karke pipeline dubara run karo.",
+  "root_cause": "Package 'fake_missing_package' PyPI par exist nahi karta hai, isliye pip install fail ho raha hai",
+  "explanation": "Commit message me likha hai ki 'fake_missing_package' ko automatically add kiya gaya hai requirements.txt me (line 33 par). Lekin ye package real nahi hai - PyPI repository me ye package available nahi hai. Jab pip install command chala toh wo is package ko dhundh nahi paya aur exit code 1 ke saath fail ho gaya. Ye ek self-healing system ki galti lag rahi hai jo missing dependency detect karke galat package name add kar diya",
+  "suggested_fix": "1. requirements.txt ki line 33 se 'fake_missing_package' entry ko remove karo\n2. Self-healing automation logic ko review karo jo automatically dependencies add kar raha hai\n3. Agar koi real package missing hai toh uska sahi naam identify karke add karo\n4. Self-healing system me validation add karo jo PyPI par package existence check kare before adding",
   "severity": "high",
   "auto_fixable": true
 }
