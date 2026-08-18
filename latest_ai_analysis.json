@@ -1,7 +1,7 @@
 {
-  "root_cause": "Test case me intentionally galat assertion likha gaya hai jo actual response se match nahi karta",
-  "explanation": "Test file me health endpoint ka response check kar rahe hain. Application 'healthy' status return kar rahi hai jo sahi hai, lekin test me expectation 'broken' rakhi gayi hai. Commit message bhi confirm karta hai ki ye intentionally break kiya gaya hai. Test line 16 pe fail ho raha hai kyunki assert response.get_json()['status'] == 'broken' likh rakha hai jabki actual response me 'healthy' aa raha hai.",
-  "suggested_fix": "tests/test_app.py file ki line 16 me assertion ko fix karo: 'assert response.get_json()[\"status\"] == \"healthy\"' likho 'broken' ki jagah. Ya phir agar intentionally test break karna tha to application code me status ko 'broken' return karo, lekin ye production ke liye recommended nahi hai.",
-  "severity": "medium",
+  "root_cause": "Package 'fake_missing_package' PyPI par exist nahi karta, isliye pip install fail ho raha hai",
+  "explanation": "Commit message me likha hai ki 'fake_missing_package' dependency ko auto-add kiya gaya hai requirements.txt file ki line 34 me. Lekin ye package PyPI (Python Package Index) par available nahi hai. Jab CI/CD pipeline ne dependencies install karne ki koshish ki, to pip is non-existent package ko download nahi kar paya aur exit code 1 ke saath fail ho gaya. Ye ek 'self-heal' attempt tha jo galat package name add kar diya.",
+  "suggested_fix": "1. requirements.txt se line 34 par 'fake_missing_package' entry ko remove karo. 2. Agar koi actual missing dependency hai to uska sahi naam identify karke add karo. 3. Self-heal automation script ko review karo jo galat package names add kar raha hai aur usko disable ya fix karo. 4. Changes commit karke pipeline dubara run karo.",
+  "severity": "high",
   "auto_fixable": true
 }
