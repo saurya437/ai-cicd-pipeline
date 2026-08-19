@@ -40,13 +40,11 @@ def detect_missing_module(analysis, failure_report):
     Root cause aur error logs me dhundo ki koi Python module missing to nahi hai.
     Return: module ka naam (string) agar mila, warna None
     """
-    # Root cause + explanation + raw error lines, sab ek text me combine karo
     combined_text = analysis.get("root_cause", "") + " " + analysis.get("explanation", "")
 
     for job in failure_report.get("failed_jobs", []):
         combined_text += " " + " ".join(job.get("error_lines", []))
 
-    # Pattern: "No module named 'xyz'" ya "ModuleNotFoundError: No module named 'xyz'"
     match = re.search(r"No module named ['\"]?([a-zA-Z0-9_\-]+)['\"]?", combined_text)
 
     if match:
@@ -57,12 +55,9 @@ def detect_missing_module(analysis, failure_report):
 def add_dependency_and_push(module_name):
     """
     requirements.txt me module add karo, phir commit aur push karo.
-    Ye function assume karta hai ki hum already git repo ke andar hain
-    aur git configured hai (jo already ho chuka hai humare project me).
     """
     req_file = "requirements.txt"
 
-    # Pehle check karo ki module already requirements.txt me to nahi hai
     with open(req_file, "r") as f:
         content = f.read()
 
@@ -70,13 +65,11 @@ def add_dependency_and_push(module_name):
         print(f"ℹ️  '{module_name}' already requirements.txt me hai. Skip kar rahe hain.")
         return False
 
-    # Module ko file me add karo
     with open(req_file, "a") as f:
         f.write(f"\n{module_name}\n")
 
     print(f"✅ '{module_name}' ko requirements.txt me add kar diya.")
 
-    # Git commit aur push karo
     try:
         subprocess.run(["git", "add", req_file], check=True)
         subprocess.run(
@@ -108,13 +101,27 @@ def main():
 
     run_id = failure_report["run_id"]
 
+    # Verify karo ki ye report abhi ke latest run ki hi hai, purani stale file nahi hai
+    latest_run_url = f"https://api.github.com/repos/{GITHUB_REPO}/actions/runs?per_page=1"
+    latest_run_response = requests.get(latest_run_url, headers=HEADERS)
+    latest_run_response.raise_for_status()
+    current_latest_run = latest_run_response.json()["workflow_runs"][0]
+
+    if current_latest_run["id"] != run_id:
+        print("⚠️  'latest_failure_report.json' purani (stale) hai — ye current latest run se match nahi karti.")
+        print("Pehle 'python main.py' chala ke fresh report generate karo.")
+        return
+
+    if current_latest_run["conclusion"] != "failure":
+        print("✅ Latest run me koi failure nahi hai. Self-healing ki zaroorat nahi.")
+        return
+
     print("🩺 Self-Healing Decision Engine\n")
     print(f"Run ID: {run_id}")
     print(f"Root Cause: {analysis['root_cause']}")
     print(f"Severity: {analysis['severity']}")
     print(f"Auto-fixable: {analysis['auto_fixable']}\n")
 
-    # Step 1: Pehle check karo - kya ye ek missing dependency ka case hai?
     missing_module = detect_missing_module(analysis, failure_report)
 
     if missing_module:
@@ -132,7 +139,6 @@ def main():
                 print("❌ Re-run trigger nahi ho paya. GitHub Actions tab manually check karo.")
         return
 
-    # Step 2: Agar dependency issue nahi hai, to normal severity/auto_fixable logic use karo
     action = decide_action(analysis)
 
     if action == "auto_retry":
