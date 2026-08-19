@@ -1,17 +1,17 @@
 {
-  "run_id": 32170758986,
+  "run_id": 32218096248,
   "branch": "main",
-  "commit_message": "fix requirement.txt fake missing package1.0",
-  "commit_sha": "389295fa4d91d5bbfa32a0234bd9bbd5f021d982",
-  "created_at": "2026-08-18T18:23:42Z",
+  "commit_message": "intentinally error",
+  "commit_sha": "07fbeda8cf2b18a098025a667f8666e326816d01",
+  "created_at": "2026-08-19T05:05:05Z",
   "status": "failure",
   "failed_jobs": [
     {
       "job_name": "test",
-      "job_id": 95821068874,
+      "job_id": 95963271684,
       "error_lines": [
-        "2026-08-18T18:23:55.6624440Z ImportError while importing test module '/home/runner/work/ai-cicd-pipeline/ai-cicd-pipeline/tests/test_app.py'.",
-        "2026-08-18T18:23:55.6628595Z E   ModuleNotFoundError: No module named 'fake_missing_package'"
+        "2026-08-19T05:05:21.5388108Z ImportError while importing test module '/home/runner/work/ai-cicd-pipeline/ai-cicd-pipeline/tests/test_app.py'.",
+        "2026-08-19T05:05:21.5392731Z E   ModuleNotFoundError: No module named 'rndrone'"
       ]
     }
   ]

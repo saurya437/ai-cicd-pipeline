@@ -1,7 +1,7 @@
 {
-  "root_cause": "requirements.txt me package name galat likha gaya hai - 'fake_missing_package' install nahi ho pa raha",
-  "explanation": "Commit message me likha hai 'fix requirement.txt fake missing package1.0' lekin test runtime pe 'fake_missing_package' module nahi mil raha. Ya to requirements.txt me package name typo hai, ya package PyPI pe exist hi nahi karta, ya phir requirements.txt update hone ke baad dependencies install nahi hui. Test file import kar rahi hai lekin package environment me available nahi hai.",
-  "suggested_fix": "1. requirements.txt me package name check karo - sahi spelling aur version confirm karo 2. Agar package real hai to 'pip install -r requirements.txt' run karo 3. Agar ye fake/test package hai to isko requirements.txt se remove karo ya test_app.py se iski dependency hatao 4. CI pipeline me ensure karo ki dependencies install step properly run ho raha hai",
+  "root_cause": "Required Python module 'rndrone' install nahi hai ya requirements.txt me missing hai",
+  "explanation": "Test execution ke dauran test_app.py file ko import karne ki koshish ki gayi, lekin 'rndrone' naam ka module Python environment me nahi mila. Ye ya to typo hai module name me, ya phir dependencies properly install nahi hui hain. Commit message 'intentionally error' se lagta hai ki ye deliberate mistake hai.",
+  "suggested_fix": "1. Pehle check karo ki 'rndrone' sahi module name hai ya 'random' likhna tha (typo check karo). 2. Agar sahi naam hai to requirements.txt me 'rndrone' add karo. 3. CI/CD pipeline me ensure karo ki 'pip install -r requirements.txt' command properly execute ho rahi hai. 4. test_app.py me import statement check karo aur sahi module name use karo.",
   "severity": "high",
   "auto_fixable": false
 }
