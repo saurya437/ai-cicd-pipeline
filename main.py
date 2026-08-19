@@ -3,6 +3,7 @@ import json
 import requests
 import anthropic
 from dotenv import load_dotenv
+from db_helper import log_run
 
 # .env file se environment variables load karo
 load_dotenv()
@@ -163,9 +164,16 @@ def main():
     print(f"Branch: {run['head_branch']}")
     print(f"Commit message: {run['head_commit']['message']}")
     print(f"Created at: {run['created_at']}")
+    
 
     if run['conclusion'] == 'success':
         print("\n✅ Pipeline passed successfully. Koi failure nahi mila, analysis ki zaroorat nahi.")
+        log_run(
+                    run_id=run['id'], branch=run['head_branch'],
+                    commit_message=run['head_commit']['message'],
+                    commit_sha=run['head_sha'], status='success',
+                    created_at=run['created_at']
+                )
         return
 
     if run['conclusion'] == 'failure':
@@ -196,6 +204,18 @@ def main():
                 json.dump(analysis, f, indent=2)
 
             print("\n✅ Analysis 'latest_ai_analysis.json' me save ho gayi.")
+            log_run(
+                run_id=run['id'], branch=run['head_branch'],
+                commit_message=run['head_commit']['message'],
+                commit_sha=run['head_sha'], status='failure',
+                root_cause=analysis['root_cause'],
+                explanation=analysis['explanation'],
+                suggested_fix=analysis['suggested_fix'],
+                severity=analysis['severity'],
+                auto_fixable=analysis['auto_fixable'],
+                created_at=run['created_at']
+            )
+
 
 
 if __name__ == "__main__":
